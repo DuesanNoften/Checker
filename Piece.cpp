@@ -1,5 +1,5 @@
 #include <iostream>
-#include "board.h"
+#include "Board.h"
 #include "Piece.h"
 
 /* Default constructor */

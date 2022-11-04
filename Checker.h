@@ -1,7 +1,7 @@
 #ifndef CHECKER_H
 #define CHECKER_H
 
-#include "board.h"
+#include "Board.h"
 #include "Piece.h"
 
 class Checker : public Piece

@@ -55,10 +55,10 @@ void Board::createChecker()
     setPiece(std::make_pair(1, 2), std::make_unique<Checker>(BLACK));
     setPiece(std::make_pair(1, 4), std::make_unique<Checker>(BLACK));
     setPiece(std::make_pair(1, 6), std::make_unique<Checker>(BLACK));
-    setPiece(std::make_pair(1, 1), std::make_unique<Checker>(BLACK));
-    setPiece(std::make_pair(1, 3), std::make_unique<Checker>(BLACK));
-    setPiece(std::make_pair(1, 5), std::make_unique<Checker>(BLACK));
-    setPiece(std::make_pair(1, 7), std::make_unique<Checker>(BLACK));
+    setPiece(std::make_pair(2, 1), std::make_unique<Checker>(BLACK));
+    setPiece(std::make_pair(2, 3), std::make_unique<Checker>(BLACK));
+    setPiece(std::make_pair(2, 5), std::make_unique<Checker>(BLACK));
+    setPiece(std::make_pair(2, 7), std::make_unique<Checker>(BLACK));
 }
 
 
