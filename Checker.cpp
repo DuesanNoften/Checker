@@ -9,10 +9,16 @@ bool Checker::isValidMove(const Board *board, const std::pair<int, int> &fromCoo
 {
 	if (board->isDiagonalMove(fromCoords, toCoords))
 	{
-		if (board->isPathClear(fromCoords, toCoords))
+        if (board->getMoveLength(fromCoords, toCoords)==1)
 		{
 			return true;
 		}
+        else if(board->getMoveLength(fromCoords,toCoords)==2)
+        {
+            if(board->isPathClear(fromCoords,toCoords)==false){
+                return true;
+            }
+        }
 	}
 	return false;
 }

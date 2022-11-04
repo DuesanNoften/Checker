@@ -13,6 +13,7 @@ QMAKE_CXXFLAGS += -std=c++17
 
 SOURCES += \
     display.cpp \
+    king.cpp \
     main.cpp \
     space.cpp \
     Checker.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 
 HEADERS += \
     display.h \
+    king.h \
     space.h \
     Checker.h \
     Board.h \

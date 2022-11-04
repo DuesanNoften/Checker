@@ -61,6 +61,7 @@ private:
     // Preparation
     void prepSquares();
     void createChecker();
+    void crownChecker(const std::pair<int, int> &coords, const std::pair<int, int> &toCoords);
 
     // Piece manipulation
     std::unique_ptr<Piece> setPiece(const std::pair<int, int> &coords, std::unique_ptr<Piece> piece);

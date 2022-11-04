@@ -60,6 +60,7 @@ char Piece::typeToChar(Type type) const
 	{
 
         case CHECKER: return 'C';
+        case KING: return 'K';
 		default: return ' ';
 	}
 }

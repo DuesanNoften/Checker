@@ -95,6 +95,20 @@ void Display::placePieces()
     spaceList[62]->setImage(":/images/Images/white.png");
 }
 
+void Display::crown(int i){
+    if (turnColor==WHITE){
+        if (i<=8){
+            spaceList[i]->setImage(":/images/Images/white_cro.png");
+        }
+    }
+    else if(turnColor==BLACK){
+        if(i>=56)
+        {
+            spaceList[i]->setImage(":/imgages/Images/black_cro.png");
+        }
+    }
+}
+
 
 QGraphicsScene* Display::getScene()
 {
@@ -131,7 +145,6 @@ void Display::getResponse(QString response)
             firstSpace += response[1];
             secondSpace += response[2];
             secondSpace += response[3];
-
             QString temp;
             for (int i=0; i<spaceList.length(); i++ )
             {
@@ -146,6 +159,8 @@ void Display::getResponse(QString response)
                 if (spaceList[i]->getName() == secondSpace)
                 {
                     spaceList[i]->setImage(temp);
+                    if (i<8 || (i>=56))
+                    crown(i);
                 }
             }
 

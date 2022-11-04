@@ -18,6 +18,7 @@ private:
     QString move;
     void setup();
     void placePieces();
+    void crown(int i);
     Color turnColor;
     QGraphicsTextItem * turn;
     QGraphicsTextItem * check;

@@ -4,6 +4,7 @@
 #include "Board.h"
 #include "Piece.h"
 #include "Checker.h"
+#include "king.h"
 
 
 
@@ -30,7 +31,7 @@ void Board::prepSquares()
     }
 }
 
-/* Creates and places the appropriate Bishops on the appropriate spots to start a game. */
+/* Creates and places the appropriate checkers on the appropriate spots to start a game. */
 void Board::createChecker()
 {
     // White Checkers
@@ -61,7 +62,23 @@ void Board::createChecker()
     setPiece(std::make_pair(2, 7), std::make_unique<Checker>(BLACK));
 }
 
+void Board::crownChecker(const std::pair<int, int> &coords, const std::pair<int, int> &toCoords){
+    if (getPiece(coords)->getColor()==WHITE){
+        if (toCoords.first==0)
+        {
+            size_t index = moves.size();
+            capturedPieces.insert(std::pair<int, std::unique_ptr<Piece>>(index, setPiece(toCoords, std::make_unique<King>(WHITE))));
+        }
+    }
+    else if(getPiece(coords)->getColor()==BLACK){
+        if (toCoords.first==7)
+        {
+            size_t index = moves.size();
+            capturedPieces.insert(std::pair<int, std::unique_ptr<Piece>>(index, setPiece(toCoords, std::make_unique<King>(BLACK))));
 
+        }
+    }
+}
 /* Sets a piece to its appropriate location in the map. */
 std::unique_ptr<Piece> Board::setPiece(const std::pair<int, int> &coords, std::unique_ptr<Piece> piece)
 {
@@ -171,7 +188,7 @@ bool Board::movePiece(const std::pair<int, int> &fromCoords, const std::pair<int
 
         return true;
     }
-
+    crownChecker(fromCoords,toCoords);
     return false;
 }
 

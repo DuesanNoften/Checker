@@ -10,7 +10,8 @@ class Board;
 
 enum Type
 {
-    CHECKER
+    CHECKER,
+    KING
 };
 
 enum Color
