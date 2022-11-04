@@ -10,7 +10,6 @@ class Board;
 
 enum Type
 {
-
     CHECKER
 };
 

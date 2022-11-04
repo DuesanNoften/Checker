@@ -14,11 +14,7 @@ bool Checker::isValidMove(const Board *board, const std::pair<int, int> &fromCoo
 			return true;
 		}
 	}
-
-	// If we've gotten this far, not a valid move
 	return false;
-
 }
 
 
-// Do I need to check that the final piece is a piece of the opposite color

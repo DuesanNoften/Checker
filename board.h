@@ -25,7 +25,6 @@ public:
     void printBoardAlgebraicAxes();
     Piece* getPiece(const std::pair<int, int> &coords) const;
     bool movePiece(const std::pair<int, int> &fromCoords, const std::pair<int, int> &toCoords);
-    void revertLastMove();
 
     // Board and movement attributes
     bool isOnBoard(const std::pair<int, int> &coords) const;

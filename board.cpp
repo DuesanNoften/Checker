@@ -1,7 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-#include "board.h"
+#include "Board.h"
 #include "Piece.h"
 #include "Checker.h"
 
@@ -426,31 +426,12 @@ std::vector<Piece*> Board::getPieces(Color color) const
     return pieces;
 }
 
-/* Revert the last move on the board. Can be called repeatedly to reverse state to beginning of game. */
-void Board::revertLastMove()
+void Board::printMoves()
 {
-    // Get last move off the moves vector
-    std::pair<std::pair<int, int>, std::pair<int, int>> lastMove = moves.back();
-
-    // Reverse the last move, i.e. if it's A → B then move A ← B
-    forceMovePiece(lastMove.second, lastMove.first);
-
-    // If this move represented a capture, replace the piece that was captured
-    size_t previousMove = moves.size() - 1;
-    if (capturedPieces.find(previousMove) != capturedPieces.end())
+    for (auto i : moves)
     {
-        // Move the piece from capturedPieces map to the board
-        setPiece(lastMove.second, std::move(capturedPieces[previousMove]));
-
-        // Erase the entry from capturedPieces map
-        capturedPieces.erase(previousMove);
+        std::cout << intToAlgebraic(i.first) << " to " << intToAlgebraic(i.second) << '\n';
     }
-
-    // Remove it from move vector
-    moves.pop_back();
-
-    // Decrement move counter in piece
-    getPiece(lastMove.first)->decrementMoves();
 }
 
 /* Print all pieces in capturedPieces map. */

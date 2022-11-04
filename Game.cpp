@@ -32,21 +32,7 @@ void Game::run()
 		}
 		else if (input == "moves")
 		{
-			board.printMoves();
-			continue;
-		}
-		else if (input == "revert")
-		{
-			if (currentMove > 1)
-			{
-				board.revertLastMove();
-				currentMove--;
-				toMove = getTurn(currentMove);
-			}
-			else
-			{
-				std::cout << "Can't revert - already at beginning of game." << '\n';
-			}
+            board.printMoves();
 			continue;
 		}
 		else if (input == "captures")
@@ -69,15 +55,25 @@ void Game::run()
 		// Verify that the correct player is moving
 		if (board.getPiece(from)->getColor() != toMove)
 		{
-			std::cout << "Error: It's " << printColor(toMove) << "'s turn." << '\n';
-			continue;
+        std::cout << "Error: It's " << printColor(toMove) << "'s turn." << '\n';
+        continue;
 		}
-
-
 		// Attempt move piece
-				currentMove++;
-				toMove = getTurn(currentMove);
+        if (board.movePiece(from, to))
+        {
+            currentMove++;
+            toMove = getTurn(currentMove);
         }
+        else
+        {
+           std::cout<<"Error Invalid move.\n";
+        }
+    }
+}
+
+void Game::guiRun()
+{
+    return;
 }
 
 /* For trying out different chess play configurations. */
@@ -110,7 +106,7 @@ bool Game::winCondition(Color defendingColor)
 
 /* Returns true if a player is in stalemate. The conditions of stalemate are:
  * - No legal moves
- * - Each player have just one piece for two turns
+ * - Each player have just one piece
 */
 bool Game::tie(Color defendingColor)
 {
@@ -155,4 +151,86 @@ std::string Game::printColor(Color color)
 	{
 		return "Black";
 	}
+}
+
+// Change guiTurn between White/Black
+void Game::switchGuiTurn()
+{
+    if (guiTurn == WHITE)
+    {
+        guiTurn = BLACK;
+    }
+    else {
+        guiTurn = WHITE;
+    }
+}
+
+// Clear move1 and move2 strings
+void Game::resetMoves()
+{
+    move1 = "";
+    move2 = "";
+}
+
+void Game::getInput(QString input)
+{
+    qDebug() << "Game saw that " << input << "was clicked, and will now respond.";
+
+    // If this is the first click, store it in move1
+    if (move1 == "")
+    {
+        move1 = input.toStdString();
+    }
+    // If this is the second click, store it in move2
+    else
+    {
+        move2 = input.toStdString();
+
+        // We can now pass the move to the Game
+        std::pair<int, int> from = board.algebraicToInt(move1); 	// convert substring to pair
+        std::pair<int, int> to = board.algebraicToInt(move2);		// convert substring to pair
+
+        // Verify that a piece was selected
+        if (board.getPiece(from) == nullptr)
+        {
+            qDebug() << "No piece selected.";
+            sendResponse("Invalid Move");
+            resetMoves();
+            return;
+        }
+
+        if (board.getPiece(from)->getColor() != guiTurn)
+        {
+            std::cout << "Error: It's " << printColor(guiTurn) << "'s turn." << '\n';
+            qDebug() << "Game.cpp: Error: Not your turn.";
+            emit sendResponse("Invalid Move");
+            resetMoves();
+            return;
+        }
+
+        // Attempt to move piece
+        else if (board.movePiece(from, to))
+        {
+            switchGuiTurn();
+            // Send QString response containing the two spaces of the valid move
+            QString sendStr = "";
+            QString part1 = QString::fromStdString(move1);
+            QString part2 = QString::fromStdString(move2);
+            sendStr += part1;
+            sendStr += part2;
+            sendResponse(sendStr);
+        }
+        else
+        {
+            std::cout << "Error: Invalid move.\n";
+            qDebug() << "Error: Invalid move.";
+            sendResponse("Invalid Move");
+        }
+        if(tie(guiTurn))
+        {
+            sendResponse("Tie");
+        }
+        resetMoves();
+    }
+
 }

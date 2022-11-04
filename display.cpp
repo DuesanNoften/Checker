@@ -68,31 +68,31 @@ void Display::setup()
 
 void Display::placePieces()
 {
-    spaceList[1]->setImage(":/images/black.png");
-    spaceList[3]->setImage(":/images/black.png");
-    spaceList[5]->setImage(":/images/black.png");
-    spaceList[7]->setImage(":/images/black.png");
-    spaceList[8]->setImage(":/images/black.png");
-    spaceList[10]->setImage(":/images/black.png");
-    spaceList[12]->setImage(":/images/black.png");
-    spaceList[14]->setImage(":/images/black.png");
-    spaceList[15]->setImage(":/images/black.png");
-    spaceList[17]->setImage(":/images/black.png");
-    spaceList[19]->setImage(":/images/black.png");
-    spaceList[21]->setImage(":/images/black.png");
+    spaceList[1]->setImage(":/images/Images/black.png");
+    spaceList[3]->setImage(":/images/Images/black.png");
+    spaceList[5]->setImage(":/images/Images/black.png");
+    spaceList[7]->setImage(":/images/Images/black.png");
+    spaceList[8]->setImage(":/images/Images/black.png");
+    spaceList[10]->setImage(":/images/Images/black.png");
+    spaceList[12]->setImage(":/images/Images/black.png");
+    spaceList[14]->setImage(":/images/Images/black.png");
+    spaceList[17]->setImage(":/images/Images/black.png");
+    spaceList[19]->setImage(":/images/Images/black.png");
+    spaceList[21]->setImage(":/images/Images/black.png");
+    spaceList[23]->setImage(":/images/Images/black.png");
 
-    spaceList[43]->setImage(":/images/white.png");
-    spaceList[45]->setImage(":/images/white.png");
-    spaceList[47]->setImage(":/images/white.png");
-    spaceList[49]->setImage(":/images/white.png");
-    spaceList[50]->setImage(":/images/white.png");
-    spaceList[52]->setImage(":/images/white.png");
-    spaceList[54]->setImage(":/images/white.png");
-    spaceList[56]->setImage(":/images/white.png");
-    spaceList[57]->setImage(":/images/white.png");
-    spaceList[59]->setImage(":/images/white.png");
-    spaceList[61]->setImage(":/images/white.png");
-    spaceList[63]->setImage(":/images/white.png");
+    spaceList[40]->setImage(":/images/Images/white.png");
+    spaceList[42]->setImage(":/images/Images/white.png");
+    spaceList[44]->setImage(":/images/Images/white.png");
+    spaceList[46]->setImage(":/images/Images/white.png");
+    spaceList[49]->setImage(":/images/Images/white.png");
+    spaceList[51]->setImage(":/images/Images/white.png");
+    spaceList[53]->setImage(":/images/Images/white.png");
+    spaceList[55]->setImage(":/images/Images/white.png");
+    spaceList[56]->setImage(":/images/Images/white.png");
+    spaceList[58]->setImage(":/images/Images/white.png");
+    spaceList[60]->setImage(":/images/Images/white.png");
+    spaceList[62]->setImage(":/images/Images/white.png");
 }
 
 
