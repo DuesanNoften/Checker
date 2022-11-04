@@ -17,20 +17,129 @@ int Init(){
     return 0;
 };
 
-int SearchMovement(list<Dama> & ml){
-    //Recorrer la lista
-    list<myList>::iterator p = myList.begin();
-
-    while(p != myList.end()){
-        list<int> s = Movement(p, p.column, p.row);
-        if(s.front() != -1){
-            p->UpdateCoords(s.front(),s.back());
-            break;
+list<int> SearchRight(int c, int r, bool e){
+    int column = c + 1;
+    int row = r - 1;
+    if(e){
+        if(matrix[column][row] == 0){
+            list<int> l = {column,row}; 
+            return l;
+        }else{
+            list<int> l = {-1,-1};
+            return l;
         }
-        p++;
+    }else{
+        if(matrix[column][row] == 0){
+            list<int> l = {column,row}; 
+            return l;
+        }else if(matrix[column][row] == 2){
+            list<int> l = SearchRight(column, row, true);
+            if(l.front() != -1){
+                //Delete checker
+                return l;
+            }else{
+                list<int> l = {-1,-1};
+                return l;
+            }
+        }else{
+            list<int> l = {-1,-1};
+            return l;
+        }
     }
-    return 0;
-};
+}
+
+list<int> SearchLeft(int c, int r, bool e){
+    int column = c + 1;
+    int row = r - 1;
+    if(e){
+        if(matrix[column][row] == 0){
+            list<int> l = {column,row}; 
+            return l;
+        }else{
+            list<int> l = {-1,-1};
+            return l;
+        }
+    }else{
+        if(matrix[column][row] == 0){
+            list<int> l = {column,row}; 
+            return l;
+        }else if(matrix[column][row] == 2){
+            list<int> l = SearchLeft(column, row, true);
+            if(l.front() != -1){
+                //Delete checker
+                return l;
+            }else{
+                list<int> l = {-1,-1};
+                return l;
+            }
+        }else{
+            list<int> l = {-1,-1};
+            return l;
+        }
+    }
+}
+
+list<int> SearchRightBack(int c, int r, bool e ){
+    int column = c - 1;
+    int row = r + 1;
+    if(e){
+        if(matrix[column][row] == 0){
+            list<int> l = {column,row}; 
+            return l;
+        }else{
+            list<int> l = {-1,-1};
+            return l;
+        }
+    }else{
+        if(matrix[column][row] == 0){
+            list<int> l = {column,row}; 
+            return l;
+        }else if(matrix[column][row] == 2){
+            list<int> l = SearchRightBack(column, row, true);
+            if(l.front() != -1){
+                //Delete checker
+                return l;
+            }else{
+                list<int> l = {-1,-1};
+                return l;
+            }
+        }else{
+            list<int> l = {-1,-1};
+            return l;
+        }
+    }
+}
+
+list<int> SearchLeftBack(int c, int r, bool e){
+    int column = c - 1;
+    int row = r - 1;
+    if(e){
+        if(matrix[column][row] == 0){
+            list<int> l = {column,row}; 
+            return l;
+        }else{
+            list<int> l = {-1,-1};
+            return l;
+        }
+    }else{
+        if(matrix[column][row] == 0){
+            list<int> l = {column,row}; 
+            return l;
+        }else if(matrix[column][row] == 2){
+            list<int> l = SearchLeftBack(column, row, true);
+            if(l.front() != -1){
+                //Delete checker
+                return l;
+            }else{
+                list<int> l = {-1,-1};
+                return l;
+            }
+        }else{
+            list<int> l = {-1,-1};
+            return l;
+        }
+    }
+}
 
 list<int> Movement(Dama ex, int com, int r){
     int column = com;
@@ -67,6 +176,7 @@ list<int> Movement(Dama ex, int com, int r){
                     }else{
                         list<int> l = {-1,-1};
                         return l;
+                    }
                 }
             }
         }else{
@@ -134,129 +244,20 @@ list<int> Movement(Dama ex, int com, int r){
             }
 
         }
-    };
+    }
+}
+
+int SearchMovement(){
+    //Recorrer la lista
+    list <Dama>::iterator p = myList.begin();
+
+    while(p != myList.end()){
+        list<int> s = Movement(p, p->column,p->row);
+        if(s.front() != -1){
+            p->UpdateCoords(s.front(),s.back());
+            break;
+        }
+        p++;
+    }
+    return 0;
 };
-
-list<int> SearchRight(int c, int r, float e ){
-    int column = c + 1;
-    int row = r + 1;
-    if(e){
-        if(matrix[column][row] == 0){
-            list<int> l = {column,row}; 
-            return l;
-        }else{
-            list<int> l = {-1,-1};
-            return l;
-        }
-    }else{
-        if(matrix[column][row] == 0){
-            list<int> l = {column,row}; 
-            return l;
-        }else if(matrix[column][row] == 2){
-            list<int> l = SearchRight(column, row, true);
-            if(l.front() != -1){
-                //Delete checker
-                return l;
-            }else{
-                list<int> l = {-1,-1};
-                return l;
-            }
-        }else{
-            list<int> l = {-1,-1};
-            return l;
-        }
-    }
-}
-
-list<int> SearchLeft(int c, int r, float e ){
-    int column = c + 1;
-    int row = r - 1;
-    if(e){
-        if(matrix[column][row] == 0){
-            list<int> l = {column,row}; 
-            return l;
-        }else{
-            list<int> l = {-1,-1};
-            return l;
-        }
-    }else{
-        if(matrix[column][row] == 0){
-            list<int> l = {column,row}; 
-            return l;
-        }else if(matrix[column][row] == 2){
-            list<int> l = SearchRight(column, row, true);
-            if(l.front() != -1){
-                //Delete checker
-                return l;
-            }else{
-                list<int> l = {-1,-1};
-                return l;
-            }
-        }else{
-            list<int> l = {-1,-1};
-            return l;
-        }
-    }
-}
-
-list<int> SearchRightBack(int c, int r, float e ){
-    int column = c - 1;
-    int row = r + 1;
-    if(e){
-        if(matrix[column][row] == 0){
-            list<int> l = {column,row}; 
-            return l;
-        }else{
-            list<int> l = {-1,-1};
-            return l;
-        }
-    }else{
-        if(matrix[column][row] == 0){
-            list<int> l = {column,row}; 
-            return l;
-        }else if(matrix[column][row] == 2){
-            list<int> l = SearchRight(column, row, true);
-            if(l.front() != -1){
-                //Delete checker
-                return l;
-            }else{
-                list<int> l = {-1,-1};
-                return l;
-            }
-        }else{
-            list<int> l = {-1,-1};
-            return l;
-        }
-    }
-}
-
-list<int> SearchLeftBack(int c, int r, float e ){
-    int column = c - 1;
-    int row = r - 1;
-    if(e){
-        if(matrix[column][row] == 0){
-            list<int> l = {column,row}; 
-            return l;
-        }else{
-            list<int> l = {-1,-1};
-            return l;
-        }
-    }else{
-        if(matrix[column][row] == 0){
-            list<int> l = {column,row}; 
-            return l;
-        }else if(matrix[column][row] == 2){
-            list<int> l = SearchRight(column, row, true);
-            if(l.front() != -1){
-                //Delete checker
-                return l;
-            }else{
-                list<int> l = {-1,-1};
-                return l;
-            }
-        }else{
-            list<int> l = {-1,-1};
-            return l;
-        }
-    }
-}
