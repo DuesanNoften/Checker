@@ -59,7 +59,6 @@ private:
         }
         QRect rect = boundingRect().toRect();
 
-        //This section of code is a bit janky and could be done better
         QPixmap pixmap(rect.size());
         pixmap.fill(Qt::transparent);
         pixmap.scaled(20,20);

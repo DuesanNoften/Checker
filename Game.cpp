@@ -37,8 +37,6 @@ void customBoardEightPiecesEach(std::map<std::pair<char, char>, char> & gameBoar
     gameBoard = temp;
 }
 
-//Resets the given board to classic checkers beginning
-//3 rows of pieces (12 total pieces each)
 void boardReset(std::map<std::pair<char, char>, char> & gameBoard) {
     std::map<std::pair<char, char>, char> temp;
     char currentPiece = '0';

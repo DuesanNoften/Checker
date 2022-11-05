@@ -1,4 +1,4 @@
-#include <QRandomGenerator64>>
+#include <QRandomGenerator64>
 #include "BackTracking.h"
 #include "Game.h"
 #include <QtGlobal>

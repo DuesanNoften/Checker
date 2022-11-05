@@ -14,7 +14,6 @@ private:
     QColor colour = Qt::black;
     bool dragOver = false;
 
-    //Variables for user creating a custom board
 
 public:
     BoardSquare(int x, int y, std::pair<char, char> square){

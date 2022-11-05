@@ -190,8 +190,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    int width = 700;
-    int height = 620;
+    int width = 1920;
+    int height = 1080;
     QGraphicsScene scene(0,0, width, height);
     boardReset(CV::gameBoard);
     drawSceneBoard(scene);
