@@ -12,9 +12,9 @@ public:
         setAcceptDrops(true);
     }
 private:
-    QColor colour = Qt::white;
+    QColor color = Qt::white;
 
-    void dragEnterEvent(QGraphicsSceneDragDropEvent *event){
+    void takePiece(QGraphicsSceneDragDropEvent *event){
         if (event->mimeData()->hasText()) {
             event->setAccepted(true);
             update();
@@ -22,7 +22,7 @@ private:
             event->setAccepted(false);
         }
     }
-    void dragLeaveEvent(QGraphicsSceneDragDropEvent *event){
+    void leavePiece(QGraphicsSceneDragDropEvent *event){
         Q_UNUSED(event);
         update();
     }
@@ -44,7 +44,7 @@ private:
         Q_UNUSED(option);
         Q_UNUSED(widget);
 
-        painter->setBrush(colour);
+        painter->setBrush(color);
         painter->drawRect(boundingRect());
     }
 
