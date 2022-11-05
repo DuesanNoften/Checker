@@ -39,7 +39,7 @@ void customBoardEightPiecesEach(std::map<std::pair<char, char>, char> & gameBoar
 
 //Resets the given board to classic checkers beginning
 //3 rows of pieces (12 total pieces each)
-void resetBoard(std::map<std::pair<char, char>, char> & gameBoard) {
+void boardReset(std::map<std::pair<char, char>, char> & gameBoard) {
     std::map<std::pair<char, char>, char> temp;
     char currentPiece = '0';
     for (char y = '1'; y <= '8'; y++) {
@@ -61,7 +61,7 @@ void resetBoard(std::map<std::pair<char, char>, char> & gameBoard) {
     gameBoard = temp;
 }
 //Depreciated: Prints board into console output
-void printBoard(const std::map<std::pair<char, char>, char> & gameBoard) {
+void showBoard(const std::map<std::pair<char, char>, char> & gameBoard) {
     std::ostringstream buf{};
     std::cout << std::setw(14) << "Checkers" << std::endl;
     buf << "  -------------------" << std::endl;
@@ -112,7 +112,7 @@ bool checkStalemate(const int & playerTurn, const std::map<std::pair<char, char>
     return !moveFound; //If a move was found, there is no stalemate
 }
 //Promotes tokens to kings if on the last rank of enemy lines
-void checkPromote(std::map<std::pair<char, char>, char> & gameBoard) {
+void checkCrown(std::map<std::pair<char, char>, char> & gameBoard) {
     for (auto el : gameBoard) {
         if ((el.first).second == '8')
             if (el.second == pieces[Black])
@@ -438,7 +438,7 @@ void movePiece(std::pair<char, char> &from,
     gameBoard.at(from) = pieces[Empty];
 }
 //Checks if players have pieces remaining to play
-int checkWinStatus(std::map<std::pair<char, char>, char> & gameBoard, int & playerTurn){
+int win(std::map<std::pair<char, char>, char> & gameBoard, int & playerTurn){
     if ((findPiecesRemaining(White, gameBoard)).size() == 0) {
         if ((findPiecesRemaining(Black, gameBoard)).size() == 0){
             return Draw;
@@ -459,7 +459,7 @@ int checkWinStatus(std::map<std::pair<char, char>, char> & gameBoard, int & play
     }
 }
 //Handles the player taking their turn
-int takeTurn(std::map<std::pair<char, char>, char> & gameBoard,
+int changeTurn(std::map<std::pair<char, char>, char> & gameBoard,
              std::pair<std::pair<char, char>, std::pair<char, char>> playerMove,
              int & playerTurn)
 {
@@ -481,9 +481,9 @@ int takeTurn(std::map<std::pair<char, char>, char> & gameBoard,
     else
         playerTurn = Black;
 
-    checkPromote(gameBoard);
+    checkCrown(gameBoard);
 
-    return checkWinStatus(gameBoard, playerTurn);
+    return win(gameBoard, playerTurn);
 }
 
 #endif

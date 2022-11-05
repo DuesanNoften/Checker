@@ -1,5 +1,5 @@
-#ifndef CHECKERS_GAME_H
-#define CHECKERS_GAME_H
+#ifndef GAME_H
+#define GAME_H
 
 #include <stdio.h>
 #include <tchar.h>
@@ -37,15 +37,15 @@ typedef enum Pieces_List{
 static const std::vector<char> pieces = { '.', 'x', 'X', 'o', 'O' };
 
 void emptyBoard(std::map<std::pair<char, char>, char> & gameBoard);
-void resetBoard(std::map<std::pair<char, char>, char> & gameBoard);
+void boardReset(std::map<std::pair<char, char>, char> & gameBoard);
 
-void printBoard(const std::map<std::pair<char, char>, char> & gameBoard);
+void showBoard(const std::map<std::pair<char, char>, char> & gameBoard);
 
 std::vector<std::pair<char, char>> findPiecesRemaining(const char& piece, const std::map<std::pair<char, char>, char> & gameBoard);
 
 bool checkStalemate(const int & playerTurn, const std::map<std::pair<char, char>, char> & gameBoard);
 
-void checkPromote(std::map<std::pair<char, char>, char> & gameBoard);
+void checkCrown(std::map<std::pair<char, char>, char> & gameBoard);
 
 std::pair<bool, std::pair<std::vector<std::pair<char, char>>, std::vector<std::pair<char, char>>>> jumpPathSearch(const std::pair<char, char> & from,
                                                                                                                   const std::pair<char, char> & to,
@@ -73,9 +73,9 @@ void movePiece(std::pair<char, char> &to,
 
 std::pair<std::pair<char, char>, std::pair<char, char>> getUserMove(std::string & prompt);
 
-int checkWinStatus(std::map<std::pair<char, char>, char> & gameBoard, int & playerTurn);
+int win(std::map<std::pair<char, char>, char> & gameBoard, int & playerTurn);
 
-int takeTurn(std::map<std::pair<char, char>, char> & gameBoard,
+int changeTurn(std::map<std::pair<char, char>, char> & gameBoard,
              std::pair<std::pair<char, char>, std::pair<char, char>> playerMove,
              int & playerTurn);
 #endif

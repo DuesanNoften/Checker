@@ -1,9 +1,8 @@
-#ifndef BOARDSQUARE_H
-#define BOARDSQUARE_H
+#ifndef SQUARE_H
+#define SQUARE_H
 #include <QGraphicsItem>
 #include <QGraphicsSceneDragDropEvent>
 #include <QMimeData>
-#include "Game.h"
 #include "main.h"
 
 class BoardSquare : public QGraphicsItem
@@ -17,14 +16,12 @@ private:
 
     //Variables for user creating a custom board
 
-    int customEditingFlag = Empty;
 public:
     BoardSquare(int x, int y, std::pair<char, char> square){
         this->x = x;
         this->y = y;
         this->square = square;
         setAcceptDrops(true);
-        //std::cout<<"Created game tile at "<<x<<y<<std::endl;
     }
     void setPos(int x, int y){
         this->x = x;
@@ -70,47 +67,8 @@ private:
 
         painter->setBrush(dragOver ? Qt::lightGray: colour);
         painter->drawRect(boundingRect());
-
-        //for displaying what piece is selected by the user when creating custom board
-        if (customEditingFlag != Empty){
-            painter->setBrush(Qt::lightGray);
-            painter->drawEllipse(QRectF(x, y, 75, 75)); //outline
-
-            bool king = false;
-            switch(customEditingFlag){
-            case Black:
-                painter->setBrush(Qt::black);
-                break;
-            case White:
-                painter->setBrush(Qt::white);
-                break;
-            case BlackKing:
-                painter->setBrush(Qt::black);
-                king = true;
-                break;
-            case WhiteKing:
-                painter->setBrush(Qt::white);
-                king = true;
-                break;
-            }
-
-            painter->drawEllipse(QRectF(x+2, y+2, 71, 71)); //interior
-            if(king){
-                const QPointF kingPoints[7] = { //the king's crown
-                    QPointF(x+18.0, y+45.0),
-                    QPointF(x+58.0, y+45.0),
-                    QPointF(x+60.0, y+15.0),
-                    QPointF(x+48.0, y+30.0),
-                    QPointF(x+38.0, y+15.0),
-                    QPointF(x+28.0, y+30.0),
-                    QPointF(x+16.0, y+15.0)
-                };
-                painter->setBrush(Qt::darkYellow);
-                painter->drawPolygon(kingPoints, 7);
-            }
-        }
     }
 };
 
 
-#endif // BOARDSQUARE_H
+#endif

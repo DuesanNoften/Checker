@@ -1,5 +1,5 @@
-#ifndef GAMEPIECE_H
-#define GAMEPIECE_H
+#ifndef CHECK_H
+#define CHECK_H
 
 #include "qapplication.h"
 #include "qgraphicssceneevent.h"

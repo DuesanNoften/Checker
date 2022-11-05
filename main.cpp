@@ -160,7 +160,7 @@ void redrawBoard(std::pair<char, char> from, std::pair<char, char> to, QGraphics
     scene->clear();
     if(CV::gameStatus != WhiteWin && CV::gameStatus != BlackWin && CV::gameStatus != Draw){ //if the game is running
 
-        CV::gameStatus = takeTurn(CV::gameBoard, std::make_pair(from, to), CV::playerTurn);
+        CV::gameStatus = changeTurn(CV::gameBoard, std::make_pair(from, to), CV::playerTurn);
 
         if (CV::gameStatus != ValidMove)
             std::cout<< CV::gameStateVector.at(CV::gameStatus)<<std::endl;
@@ -193,7 +193,7 @@ int main(int argc, char *argv[])
     int width = 700;
     int height = 620;
     QGraphicsScene scene(0,0, width, height);
-    resetBoard(CV::gameBoard);
+    boardReset(CV::gameBoard);
     drawSceneBoard(scene);
     drawScenePieces(scene, CV::gameBoard);
 
@@ -215,11 +215,11 @@ int main(int argc, char *argv[])
         if(CF::resetFlag){
             switch(CV::boardLayout){
             case Standard:
-                resetBoard(CV::gameBoard);
+                boardReset(CV::gameBoard);
                 break;
             }
-            checkPromote(CV::gameBoard);
-            CV::gameStatus = checkWinStatus(CV::gameBoard, CV::playerTurn);
+            checkCrown(CV::gameBoard);
+            CV::gameStatus = win(CV::gameBoard, CV::playerTurn);
             CV::playerTurn = White;
             scene.clear();
             CV::movesListString = QString("White\tBlack\n");
