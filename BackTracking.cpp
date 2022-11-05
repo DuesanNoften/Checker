@@ -5,18 +5,13 @@
 
 std::pair<int, std::pair<char, char>> findBestJumpMoveAI(const std::map<std::pair<char, char>, char> &gameBoard,
                                                          const std::pair<char, char> &from){
-    //Code look familiar? Much of it was written in checkersgame.cpp
-    //It needed to now be modified to suit the AI, and copying the base tree explorer was easier then re-writing.
-
-    //TODO: extra points for jumping kings
-    //Optimise, currently very very slow (for what it should be) (probably too many "finds")
 
     std::set<std::pair<char, char>> possibilities {}; //squares that need to be searched
     std::set<std::pair<char, char>> searchedPossibilities{}; //squares that were already searched through
 
     int playerPiece = gameBoard.at(from);
 
-    //The node could also be implemented as its own class
+    //Structure that contains a position, the possibilities for the next step and if the enemy has been there
     struct Node {
     public:
         std::pair<char, char> square; //Which square this is
@@ -37,19 +32,17 @@ std::pair<int, std::pair<char, char>> findBestJumpMoveAI(const std::map<std::pai
         }
     };
 
-    Node current (from);
-    possibilities.insert(from);
+    Node current (from);//Create a new node
+    possibilities.insert(from);//Insert a square in possibilities
 
     int jumpedPieceAmount = 0;
     std::map<int, std::vector<std::pair<char, char>>> valueOfSquare{}; //Stores squares based on how many enemies they have jumped over.
     valueOfSquare[0].push_back(from);
 
-    //auto temp = findJumpSquares(player, current.square, gameBoard);
     while (possibilities != searchedPossibilities) {
-        auto temp = findJumpSquares(playerPiece, current.square, gameBoard); //from checkersgame.h
+        auto temp = findJumpSquares(playerPiece, current.square, gameBoard);
 
         if (!current.searched) {
-            //assert(temp.first.size() == temp.second.size());
             for (unsigned int i = 0; i < temp.first.size(); i++) {
                 auto el = temp.first.at(i);
                 current.jumpPoints.push(el);
@@ -72,11 +65,10 @@ std::pair<int, std::pair<char, char>> findBestJumpMoveAI(const std::map<std::pai
             }
         }
         if (current.jumpPoints.empty()) { //Check if end of the line
-            if (current.fromPtr == nullptr) {
+            if (current.fromPtr == nullptr) {//Avoid end
                 break;
             }
             else {
-                //std::cout << "Tried: " << current.square.first << current.square.second << std::endl;
                 valueOfSquare[jumpedPieceAmount].push_back(current.square);
                 current = *(current.fromPtr); //return, at end of the line
                 jumpedPieceAmount--;
@@ -91,12 +83,8 @@ std::pair<int, std::pair<char, char>> findBestJumpMoveAI(const std::map<std::pai
         }
 
     }
-    //returns:
-    //  pair   -> vector of points -> squares that the piece jumped to on the way to the finish
-    //         -> vector of points -> enemy pieces squares that were jumped over along the path
-    //
-    // Note: the first vector of points is returned for the future implementation of animating the jumping sequence.
-    std::pair<char, char> to = from; //default
+
+    std::pair<char, char> to = from;
     int val = 0;
     for (auto it = valueOfSquare.begin(); it != valueOfSquare.end(); ++it){
         if (it->first > val){
@@ -120,7 +108,7 @@ std::pair<char, char> findSingleSquareMoveAI(const std::map<std::pair<char, char
     char playerPiece = gameBoard.find(from)->second;
     auto it = gameBoard.find(std::make_pair(from.first + 1, from.second + 1));
 
-    if (playerPiece == pieces[Black] || playerPiece == pieces[BlackKing] || playerPiece == pieces[WhiteKing]) { //Pieces that can move up
+    if (playerPiece == pieces[Black] || playerPiece == pieces[BlackKing]) { //Pieces that can move up
         //top right square
         it = gameBoard.find(std::make_pair(from.first + 1, from.second + 1));
         if(it != gameBoard.end()){
@@ -138,7 +126,7 @@ std::pair<char, char> findSingleSquareMoveAI(const std::map<std::pair<char, char
         }
 
     }
-    if (playerPiece == pieces[White] || playerPiece == pieces[BlackKing] || playerPiece == pieces[WhiteKing]) { // Pieces that can move up
+    if (playerPiece == pieces[BlackKing]) { // Pieces that can move up
         //bottom left square
         it = gameBoard.find(std::make_pair(from.first - 1, from.second - 1));
         if(it != gameBoard.end()){
@@ -177,12 +165,13 @@ std::pair<std::pair<char, char>, std::pair<char, char>> getMoveAI(std::map<std::
         throw "Programmer error: AI has no pieces to move.";
     }
 
+    //Generates a vector Best Move, that contains the movement to make
     std::pair<std::pair<char, char>, std::pair<char, char>> bestMove = std::make_pair(std::make_pair('z', 'z'), std::make_pair('z', 'z'));
     int val = 0;
     std::vector<std::pair<std::pair<char, char>, std::pair<char, char>>> possibleMoves {};
-    for(auto it = pieceVec.begin(); it != pieceVec.end(); ++it){
-        auto temp = findBestJumpMoveAI(gameBoard, *it);
-        if(temp.first > val){
+    for(auto it = pieceVec.begin(); it != pieceVec.end(); ++it){//Search in all the available pieces to move
+        auto temp = findBestJumpMoveAI(gameBoard, *it);//Calls findBestJumpMoveAI
+        if(temp.first > val){ //Sees if the movement is better than the past one
             std::vector<std::pair<std::pair<char, char>, std::pair<char, char>>> newPossibleMoves;
             newPossibleMoves.push_back(std::make_pair(*it, temp.second));
             val = temp.first;
@@ -192,10 +181,7 @@ std::pair<std::pair<char, char>, std::pair<char, char>> getMoveAI(std::map<std::
         }
     }
 
-    if(val>0){
-        /*for (auto it = possibleMoves.begin(); it != possibleMoves.end(); ++it)
-            std::cout << char(it->first.first)<<char(it->first.second) << "->" <<char(it->second.first)<<char(it->second.second) << std::endl;
-        */
+    if(val>0){//Assign a possible move from the best possibleMoves vector list
         int randomIndex = rand() % possibleMoves.size();
         bestMove = possibleMoves.at(randomIndex);
     }
