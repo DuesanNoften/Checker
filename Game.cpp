@@ -1,5 +1,5 @@
-#ifndef CHECKERS_GAME
-#define CHECKERS_GAME
+#ifndef GAME
+#define GAME
 
 #include "Game.h"
 

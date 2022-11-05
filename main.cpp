@@ -38,12 +38,12 @@ void drawSceneBoard( QGraphicsScene & scene){
 
 
     QGraphicsTextItem * playerTurnText = scene.addText( (CV::playerTurn == White) ? QString("White to move") : QString("Black to move") );
-    playerTurnText->setFont(QFont("Arial", 16));
+    playerTurnText->setFont(QFont("Times New Roman", 16));
     playerTurnText->setPos(0, 30);
 
     //Displays if the move was valid or if a colour has won
     QGraphicsTextItem * displayBar = scene.addText(QString(CV::gameStateVector.at(CV::gameStatus).c_str()));
-    displayBar->setFont(QFont("Arial", 22));
+    displayBar->setFont(QFont("Times New Roman", 22));
     displayBar->setPos(620+75, 30);
 
     //Displays the moves that have been made this game
@@ -63,13 +63,13 @@ void drawSceneBoard( QGraphicsScene & scene){
     //reset button
     QPushButton *resetButton = new QPushButton;
     QObject::connect(resetButton, &QPushButton::clicked, [](){CF::resetFlag = true;});
-    resetButton->setFont(QFont("Arial", 14));
+    resetButton->setFont(QFont("Times New Roman", 14));
     resetButton->setGeometry(QRect(620 + 75, 75, 120, 30));
     resetButton->setText("Reset Game");
     scene.addWidget(resetButton);
 
     QCheckBox *checkboxWhiteAI = new QCheckBox;
-    checkboxWhiteAI->setFont(QFont("Arial", 14));
+    checkboxWhiteAI->setFont(QFont("Times New Roman", 14));
     checkboxWhiteAI->setText("White AI");
     checkboxWhiteAI->setGeometry(QRect(620 + 75 + 240, 75, 120, 30));
     checkboxWhiteAI->setCheckState(CF::whiteAIFlag ? Qt::Checked : Qt::Unchecked);
@@ -78,7 +78,7 @@ void drawSceneBoard( QGraphicsScene & scene){
     scene.addWidget(checkboxWhiteAI);
 
     QCheckBox *checkboxBlackAI = new QCheckBox;
-    checkboxBlackAI->setFont(QFont("Arial", 14));
+    checkboxBlackAI->setFont(QFont("Times New Roman", 14));
     checkboxBlackAI->setText("Black AI");
     checkboxBlackAI->setGeometry(QRect(620 + 75 + 240, 100, 120, 30));
     checkboxBlackAI->setCheckState(CF::blackAIFlag ? Qt::Checked : Qt::Unchecked);
@@ -136,14 +136,14 @@ void drawScenePieces(QGraphicsScene & scene, std::map<std::pair<char, char>, cha
                 bool king = false;
                 //std::cout<<"Found ["<<piece<<"] at "<<x<<","<<y<<std::endl;
                 if (piece == pieces[Black]){
-                    color = Qt::gray;
+                    color = QColor::fromRgb(101,70,50);
                 }else if(piece == pieces[BlackKing]){
-                    color = Qt::gray;
+                    color = QColor::fromRgb(101,70,50);
                     king = true;
                 }else if (piece == pieces[White]){
-                    color = Qt::white;
+                    color = QColor::fromRgb(251,228,122);
                 }else if (piece == pieces[WhiteKing]){
-                    color = Qt::white;
+                    color = QColor::fromRgb(251,228,122);
                     king = true;
                 }else{
                     continue;

@@ -12,7 +12,7 @@ public:
         setAcceptDrops(true);
     }
 private:
-    QColor color = Qt::white;
+    QColor color = Qt::darkRed;
 
     void takePiece(QGraphicsSceneDragDropEvent *event){
         if (event->mimeData()->hasText()) {
