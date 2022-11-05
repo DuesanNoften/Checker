@@ -1,17 +1,5 @@
-/*
- * File: ai.h
- * Author: Bryce Dombrowski
- *
- * Date: January 22nd, 2018
- *
- * Sites:   brycedombrowski.com
- *          github.com/fwacer
- *
- * Contact: brycetdombrowski@gmail.com
- */
-
-#ifndef AI_H
-#define AI_H
+#ifndef BACKTRACKING_H
+#define BACKTRACKING_H
 
 #include <stdio.h>
 #include <stdlib.h>

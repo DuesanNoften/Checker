@@ -1,21 +1,9 @@
-/*
- * File: boardsquare.h
- * Author: Bryce Dombrowski
- *
- * Date: January 13th, 2018
- *
- * Sites:   brycedombrowski.com
- *          github.com/fwacer
- *
- * Contact: brycetdombrowski@gmail.com
- */
-
 #ifndef BOARDSQUARE_H
 #define BOARDSQUARE_H
 #include <QGraphicsItem>
 #include <QGraphicsSceneDragDropEvent>
 #include <QMimeData>
-#include "checkersgame.h"
+#include "Game.h"
 #include "main.h"
 
 class BoardSquare : public QGraphicsItem

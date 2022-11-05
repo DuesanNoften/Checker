@@ -1,15 +1,3 @@
-/*
- * File: checkersgame.h
- * Author: Bryce Dombrowski
- *
- * Date: January 13th, 2018
- *
- * Sites:   brycedombrowski.com
- *          github.com/fwacer
- *
- * Contact: brycetdombrowski@gmail.com
- */
-
 #ifndef CHECKERS_GAME_H
 #define CHECKERS_GAME_H
 

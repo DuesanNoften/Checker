@@ -1,17 +1,6 @@
-/*
- * File: ai.cpp
- * Author: Bryce Dombrowski
- *
- * Date: January 22nd, 2018
- *
- * Sites:   brycedombrowski.com
- *          github.com/fwacer
- *
- * Contact: brycetdombrowski@gmail.com
- */
 #include <QRandomGenerator64>>
-#include "ai.h"
-#include "checkersgame.h"
+#include "BackTracking.h"
+#include "Game.h"
 #include <QtGlobal>
 
 std::pair<int, std::pair<char, char>> findBestJumpMoveAI(const std::map<std::pair<char, char>, char> &gameBoard,

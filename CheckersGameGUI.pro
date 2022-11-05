@@ -24,15 +24,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-    checkersgame.cpp \
-    ai.cpp
+    BackTracking.cpp \
+    Game.cpp \
+        main.cpp
 
 HEADERS += \
-    boardsquare.h \
-    gamepiece.h \
-    main.h \
-    checkersgame.h \
-    backdrop.h \
-    ai.h
+    BackTracking.h \
+    Check.h \
+    Game.h \
+    MovePiece.h \
+    Square.h \
+    main.h
 

@@ -1,19 +1,7 @@
-/*
- * File: CheckersGame.cpp
- * Author: Bryce Dombrowski
- *
- * Date: January 13th, 2018
- *
- * Sites:   brycedombrowski.com
- *          github.com/fwacer
- *
- * Contact: brycetdombrowski@gmail.com
- */
-
 #ifndef CHECKERS_GAME
 #define CHECKERS_GAME
 
-#include "checkersgame.h"
+#include "Game.h"
 
 void emptyBoard(std::map<std::pair<char, char>, char> & gameBoard){
     std::map<std::pair<char, char>, char> temp;

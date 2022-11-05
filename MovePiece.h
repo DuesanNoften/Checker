@@ -1,18 +1,5 @@
-#ifndef BACKDROP_H
-#define BACKDROP_H
-
-/*
- * File: backdrop.h
- * Author: Bryce Dombrowski
- *
- * Date: January 13th, 2018
- *
- * Sites:   brycedombrowski.com
- *          github.com/fwacer
- *
- * Contact: brycetdombrowski@gmail.com
- */
-
+#ifndef MOVEPIECE_H
+#define MOVEPIECE_H
 #include "main.h"
 #include <QGraphicsItem>
 #include <QGraphicsSceneDragDropEvent>
@@ -65,4 +52,4 @@ private:
 
 
 
-#endif // BACKDROP_H
+#endif // MOVEPIECE_H

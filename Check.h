@@ -1,15 +1,3 @@
-/*
- * File: gamepiece.h
- * Author: Bryce Dombrowski
- *
- * Date: January 13th, 2018
- *
- * Sites:   brycedombrowski.com
- *          github.com/fwacer
- *
- * Contact: brycetdombrowski@gmail.com
- */
-
 #ifndef GAMEPIECE_H
 #define GAMEPIECE_H
 
