@@ -16,7 +16,6 @@
 #include <QGraphicsSceneDragDropEvent>
 #include <QMimeData>
 #include "checkersgame.h"
-#include "gamepiece.h"
 #include "main.h"
 
 class BoardSquare : public QGraphicsItem

@@ -13,6 +13,8 @@
 #ifndef GAMEPIECE_H
 #define GAMEPIECE_H
 
+#include "qgraphicssceneevent.h"
+#include "qpainter.h"
 #include <Qt>
 #include <QGraphicsItem>
 #include <QMouseEvent>

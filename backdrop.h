@@ -13,10 +13,10 @@
  * Contact: brycetdombrowski@gmail.com
  */
 
+#include "main.h"
 #include <QGraphicsItem>
 #include <QGraphicsSceneDragDropEvent>
 #include <QMimeData>
-#include "checkersgame.h"
 
 class Backdrop : public QGraphicsItem
 {
