@@ -68,24 +68,6 @@ void drawSceneBoard( QGraphicsScene & scene){
     resetButton->setText("Reset Game");
     scene.addWidget(resetButton);
 
-    QCheckBox *checkboxWhiteAI = new QCheckBox;
-    checkboxWhiteAI->setFont(QFont("Times New Roman", 14));
-    checkboxWhiteAI->setText("White AI");
-    checkboxWhiteAI->setGeometry(QRect(620 + 75 + 240, 75, 120, 30));
-    checkboxWhiteAI->setCheckState(CF::whiteAIFlag ? Qt::Checked : Qt::Unchecked);
-    QObject::connect(checkboxWhiteAI, QOverload<int>::of(&QCheckBox::stateChanged),
-        [&](){ CF::whiteAIFlag = !CF::whiteAIFlag; CF::refreshFlag = true; });
-    scene.addWidget(checkboxWhiteAI);
-
-    QCheckBox *checkboxBlackAI = new QCheckBox;
-    checkboxBlackAI->setFont(QFont("Times New Roman", 14));
-    checkboxBlackAI->setText("Black AI");
-    checkboxBlackAI->setGeometry(QRect(620 + 75 + 240, 100, 120, 30));
-    checkboxBlackAI->setCheckState(CF::blackAIFlag ? Qt::Checked : Qt::Unchecked);
-    QObject::connect(checkboxBlackAI, QOverload<int>::of(&QCheckBox::stateChanged),
-        [&](){ CF::blackAIFlag = !CF::blackAIFlag; CF::refreshFlag = true;});
-    scene.addWidget(checkboxBlackAI);
-
     QGraphicsItem *BackdropItem = new Backdrop(); //can accept drops and return an error if the user misses dropping on a valid square
     scene.addItem(BackdropItem);
 
@@ -228,14 +210,8 @@ int main(int argc, char *argv[])
             drawScenePieces(scene, CV::gameBoard);
             CF::resetFlag = false;
         }
-        else if(!CF::playerMovingFlag && CV::gameStatus != WhiteWin && CV::gameStatus != BlackWin && CV::gameStatus != Draw){
-
-            //AI turn, if enabled
-            if(CF::whiteAIFlag && CV::playerTurn == White){ //If it's White's turn and an AI is controlling it
-                auto move = getMoveAI(CV::gameBoard, CV::playerTurn);
-                redrawBoard(move.first, move.second, &scene);
-            }
-            else if(CF::blackAIFlag && CV::playerTurn == Black){ //If it's Blacks's turn and an AI is controlling it
+        else if(!CF::playerMovingFlag && CV::gameStatus != WhiteWin && CV::gameStatus != BlackWin && CV::gameStatus != Draw){      
+            if(true && CV::playerTurn == Black){ //If it's Blacks's turn and an AI is controlling it
                 auto move = getMoveAI(CV::gameBoard, CV::playerTurn);
                 redrawBoard(move.first, move.second, &scene);
             }
