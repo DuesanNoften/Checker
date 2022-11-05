@@ -3,6 +3,7 @@
 #include "Game.h"
 #include <QtGlobal>
 #include <fstream>
+#include <string>
 
 std::pair<int, std::pair<char, char>> findBestJumpMoveAI(const std::map<std::pair<char, char>, char> &gameBoard,
                                                          const std::pair<char, char> &from){
@@ -99,9 +100,11 @@ std::pair<int, std::pair<char, char>> findBestJumpMoveAI(const std::map<std::pai
 
     text.open("RegistroJump.txt",ios::out);
 
-    archivo<<possibilities;
-
-    archivo.close
+    for (std::vector<int>::iterator it = possibilities.begin() ; it != possibilities.end(); ++it){
+        std::string str(it.begin(), it.end());
+        text.write(str.c_str(), str.size());
+    }
+    text.close
 
     if(val == 0){
         return {0, to};
