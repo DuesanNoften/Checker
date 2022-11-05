@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/images">
-        <file>Images/black.png</file>
-        <file>Images/black_cro.png</file>
-        <file>Images/white.png</file>
-        <file>Images/white_cro.png</file>
-    </qresource>
-</RCC>
