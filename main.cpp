@@ -1,4 +1,3 @@
-
 #include <QTimer>
 #include <QPushButton>
 #include <QComboBox>
@@ -25,7 +24,6 @@ namespace CV{
     QString movesListString2 = QString("White\tBlack\n"); //for the second column if the first fills up
 }
 namespace CF{
-    bool editedCustomBoardFlag = false; //Has a custom board been created?
     bool resetFlag = false; //Reset the game
     bool refreshFlag = false; //Refresh the scene
 
@@ -38,20 +36,6 @@ void drawSceneBoard( QGraphicsScene & scene){
     int xOffset = 10;
     int yOffset = 85;
 
-    QGraphicsTextItem * titleText = scene.addText(QString("CHECKERS"));
-    titleText->setFont(QFont("Arial", 55));
-    titleText->setPos(160, 0);
-
-    //Displays github link
-    QGraphicsTextItem * brandingLink = scene.addText(QString("https://github.com/fwacer/Checkers-Game"));
-    brandingLink->setFont(QFont("Arial", 10));
-    brandingLink->setPos(574, 0);
-    brandingLink->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
-
-    //Displays author name
-    QGraphicsTextItem * authorName = scene.addText(QString("By Bryce"));
-    authorName->setFont(QFont("Calibri", 16));
-    authorName->setPos(575, 50);
 
     QGraphicsTextItem * playerTurnText = scene.addText( (CV::playerTurn == White) ? QString("White to move") : QString("Black to move") );
     playerTurnText->setFont(QFont("Arial", 16));
@@ -84,39 +68,6 @@ void drawSceneBoard( QGraphicsScene & scene){
     resetButton->setText("Reset Game");
     scene.addWidget(resetButton);
 
-    //refresh button
-    QPushButton *refreshButton = new QPushButton;
-    QObject::connect(refreshButton, &QPushButton::clicked, [](){CF::refreshFlag = true;});
-    refreshButton->setFont(QFont("Arial", 14));
-    refreshButton->setGeometry(QRect(620 + 75 + 120, 75, 120, 30));
-    refreshButton->setText("Refresh \u21BA"); //unicode refresh symbol
-    scene.addWidget(refreshButton);
-
-    if(CV::boardLayout == CustomBoardCreate){ //Only shows play button if in the "Create" tab
-        QPushButton *playButton = new QPushButton;
-        QObject::connect(playButton, &QPushButton::clicked,
-                         [](){CV::boardLayout = CustomBoardPlay; CF::resetFlag = true;});
-        playButton->setFont(QFont("Arial", 14));
-        playButton->setGeometry(QRect(620 + 75, 30, 240, 45));
-        playButton->setText("Play!");
-        scene.addWidget(playButton);
-    }
-
-    QComboBox *comboBox = new QComboBox;
-    comboBox->setFont(QFont("Arial", 14));
-    comboBox->setGeometry(620+75, 105, 240/*120*/, 30);
-    comboBox->setFrame(true);
-    comboBox->addItem(QString("Select Board Layout  \u25BC"), 0); //unicode down pointer
-    comboBox->addItem(QString("Standard"), Standard);
-    comboBox->addItem(QString("Kings"), Kings);
-    comboBox->addItem(QString("Jumpalicious"), Jumpalicious);
-    comboBox->addItem(QString("TwoRows"), TwoRows);
-    comboBox->addItem(QString("Create Custom Board"), CustomBoardCreate);
-    if(CF::editedCustomBoardFlag) comboBox->addItem(QString("Play Custom Board"), CustomBoardPlay);
-    QObject::connect(comboBox, QOverload<int>::of(&QComboBox::activated),
-        [&](int index){ if (index != 0) CV::boardLayout = index; else CV::boardLayout = Standard; });
-    scene.addWidget(comboBox);
-
     QCheckBox *checkboxWhiteAI = new QCheckBox;
     checkboxWhiteAI->setFont(QFont("Arial", 14));
     checkboxWhiteAI->setText("White AI");
@@ -135,22 +86,6 @@ void drawSceneBoard( QGraphicsScene & scene){
         [&](){ CF::blackAIFlag = !CF::blackAIFlag; CF::refreshFlag = true;});
     scene.addWidget(checkboxBlackAI);
 
-
-    QPushButton *authorInfoButton = new QPushButton;
-    QObject::connect(authorInfoButton, &QPushButton::clicked, [](){
-        //Pop up to show author info
-        QMessageBox::information(0, QString("Author info"),
-                                 QString("This Checkers GUI was created by Bryce Dombrowski, using C++ and Qt.\n"
-                                         "Links:\n"
-                                         "https://github.com/fwacer/Checkers-Game\n"
-                                         "https://brycedombrowski.com/2018/01/13/winter-2017-18-checkers-game-gui/"), QMessageBox::Ok);
-    });
-    authorInfoButton->setFont(QFont("Arial", 14));
-    authorInfoButton->setGeometry(QRect(620 + 75 + 130, 75 + 60, 110, 30));
-    authorInfoButton->setText("Author Info");
-    scene.addWidget(authorInfoButton);
-
-    //std::map<std::pair<char, char>, QGraphicsItem> visualBoard;
     QGraphicsItem *BackdropItem = new Backdrop(); //can accept drops and return an error if the user misses dropping on a valid square
     scene.addItem(BackdropItem);
 
@@ -159,7 +94,6 @@ void drawSceneBoard( QGraphicsScene & scene){
         for (char x = 'a'; x <= 'h'; x++){
             if ((((y - 49) % 2) == 0) == (((x - 97) % 2) == 0)){  //XNOR to help with the diagonalness of the board
                 QGraphicsItem *boardSquareItem = new BoardSquare((x-97)*75 + 75, 525-(y-49)*75 + yOffset, std::make_pair(x, y));
-                //std::cout<<"Placed at "<<x<<","<<y<<std::endl;
                 //visualBoard[std::make_pair(x, y)] = boardSquareItem;
                 scene.addItem(boardSquareItem);
             //else -> is a white square, so doesn't matter
@@ -191,21 +125,10 @@ void drawSceneBoard( QGraphicsScene & scene){
         letter->setText(QString(s[0]));
         scene.addItem(letter);
     }
-
-    if(CF::userCreatingBoardFlag){
-        QMessageBox::information(0, QString("Information"),
-                                 QString("Welcome to the board layout creator!\n"
-                                         "Left click a square to cycle through the colours.\n"
-                                         "Right click to promote/demote.\n"
-                                         "Press Play when you are ready.\n"
-                                         "This board will not be saved if you enter the board creator again."), QMessageBox::Ok);
-
-    }
 }
 void drawScenePieces(QGraphicsScene & scene, std::map<std::pair<char, char>, char> & gameBoard){
-    //int xOffset = 10;
     int yOffset = 85;
-    QColor colour = Qt::white;
+    QColor color = Qt::white;
     for (char y = '1'; y <= '8'; y++) {
         for (char x = 'a'; x <= 'h'; x++) {
             if ((((y-49) % 2) == 0) == (((x - 97) % 2) == 0)) { //Helps with the diagonalness of the board
@@ -213,23 +136,21 @@ void drawScenePieces(QGraphicsScene & scene, std::map<std::pair<char, char>, cha
                 bool king = false;
                 //std::cout<<"Found ["<<piece<<"] at "<<x<<","<<y<<std::endl;
                 if (piece == pieces[Black]){
-                    colour = Qt::black;
+                    color = Qt::gray;
                 }else if(piece == pieces[BlackKing]){
-                    colour = Qt::black;
+                    color = Qt::gray;
                     king = true;
                 }else if (piece == pieces[White]){
-                    colour = Qt::white;
+                    color = Qt::white;
                 }else if (piece == pieces[WhiteKing]){
-                    colour = Qt::white;
+                    color = Qt::white;
                     king = true;
                 }else{
                     continue;
                 }
-                //std::cout<<"Placed ["<<(((piece == pieces[2]) || (piece == pieces[1])) ? "x" : "o")<<"] at "<<x<<","<<y<<std::endl;
-                QGraphicsItem *gamePieceItem = new GamePiece((x-97)*75 + 75, 525 - (y-49)*75+yOffset, colour, std::make_pair(x, y), king);
+                QGraphicsItem *gamePieceItem = new GamePiece((x-97)*75 + 75, 525 - (y-49)*75+yOffset, color, std::make_pair(x, y), king);
                 scene.addItem(gamePieceItem);
             }
-            //else -> not on board, so doesn't matter
         }
     }
 }
@@ -264,21 +185,15 @@ void redrawBoard(std::pair<char, char> from, std::pair<char, char> to, QGraphics
     drawScenePieces(*scene, CV::gameBoard);
     CF::playerMovingFlag = false;
 }
-//For creating custom layouts
-void customBoardAddPiece(std::pair<char, char> square, int pieceType){
-    CV::userCreatedBoard[square] = pieces[pieceType];
-    CF::editedCustomBoardFlag = true;
-}
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    int width = 700; //620
+    int width = 700;
     int height = 620;
     QGraphicsScene scene(0,0, width, height);
     resetBoard(CV::gameBoard);
-    emptyBoard(CV::userCreatedBoard); //for custom created boards
     drawSceneBoard(scene);
     drawScenePieces(scene, CV::gameBoard);
 
@@ -298,33 +213,13 @@ int main(int argc, char *argv[])
     QTimer *timer = new QTimer;
     QObject::connect(timer, &QTimer::timeout, [&scene](){
         if(CF::resetFlag){
-            CF::userCreatingBoardFlag = false;
             switch(CV::boardLayout){
             case Standard:
                 resetBoard(CV::gameBoard);
                 break;
-            case Kings:
-                customBoardAllKings(CV::gameBoard);
-                break;
-            case Jumpalicious:
-                customBoardBigJumper(CV::gameBoard);
-                break;
-            case TwoRows:
-                customBoardEightPiecesEach(CV::gameBoard);
-                break;
-            case CustomBoardCreate:
-                CF::editedCustomBoardFlag = false;
-                emptyBoard(CV::gameBoard);
-                emptyBoard(CV::userCreatedBoard);
-                CF::userCreatingBoardFlag = true;
-                break;
-            case CustomBoardPlay:
-                CV::gameBoard = CV::userCreatedBoard;
-                break;
-                /*Room for future layouts*/
             }
             checkPromote(CV::gameBoard);
-            CV::gameStatus = checkWinStatus(CV::gameBoard, CV::playerTurn); //Protection for custom boards
+            CV::gameStatus = checkWinStatus(CV::gameBoard, CV::playerTurn);
             CV::playerTurn = White;
             scene.clear();
             CV::movesListString = QString("White\tBlack\n");
@@ -333,8 +228,7 @@ int main(int argc, char *argv[])
             drawScenePieces(scene, CV::gameBoard);
             CF::resetFlag = false;
         }
-        else if(!CF::playerMovingFlag && !CF::userCreatingBoardFlag
-                && CV::gameStatus != WhiteWin && CV::gameStatus != BlackWin && CV::gameStatus != Draw){
+        else if(!CF::playerMovingFlag && CV::gameStatus != WhiteWin && CV::gameStatus != BlackWin && CV::gameStatus != Draw){
 
             //AI turn, if enabled
             if(CF::whiteAIFlag && CV::playerTurn == White){ //If it's White's turn and an AI is controlling it
@@ -344,14 +238,6 @@ int main(int argc, char *argv[])
             else if(CF::blackAIFlag && CV::playerTurn == Black){ //If it's Blacks's turn and an AI is controlling it
                 auto move = getMoveAI(CV::gameBoard, CV::playerTurn);
                 redrawBoard(move.first, move.second, &scene);
-            }
-        }
-        if (CF::refreshFlag){
-            if(!CF::userCreatingBoardFlag){
-                scene.clear();
-                drawSceneBoard(scene);
-                drawScenePieces(scene, CV::gameBoard);
-                CF::refreshFlag = false;
             }
         }
 

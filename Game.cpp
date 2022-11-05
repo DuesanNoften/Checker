@@ -36,47 +36,7 @@ void customBoardEightPiecesEach(std::map<std::pair<char, char>, char> & gameBoar
     }
     gameBoard = temp;
 }
-//Custom board: 4 kings for each player.
-void customBoardAllKings(std::map<std::pair<char, char>, char> & gameBoard) {
-    std::map<std::pair<char, char>, char> temp;
-    char currentPiece = pieces[Empty];
-    for (char y = '1'; y <= '8'; y++) {
-        if (y == '1')
-            currentPiece = pieces[WhiteKing];
-        else if (y == '8')
-            currentPiece = pieces[BlackKing];
-        else
-            currentPiece = pieces[Empty];
 
-        for (char x = 'a'; x <= 'h'; x++) {
-            if ((((y - 1) % 2) == 0) == (((x - 97) % 2) == 0)) { //XNOR to help with the diagonalness of the board
-                temp[std::make_pair(x, y)] = currentPiece;
-            }
-            //else -> not on board, so doesn't matter
-        }
-    }
-    gameBoard = temp;
-}
-//Custom board, for testing the jumping algorithm
-void customBoardBigJumper(std::map<std::pair<char, char>, char> & gameBoard) {
-    std::map<std::pair<char, char>, char> temp;
-    for (char y = '1'; y <= '8'; y++) {
-        for (char x = 'a'; x <= 'h'; x++) {
-            if ((((y - 1) % 2) == 0) == (((x - 97) % 2) == 0)) { //XNOR to help with the diagonalness of the board
-                temp[std::make_pair(x, y)] = pieces[Empty];
-            }
-        }
-    }
-    temp.at({ 'a', '1'}) = pieces[Black];
-    temp.at({ 'f', '2' }) = pieces[Black];
-    temp.at({ 'f', '4' }) = pieces[Black];
-    temp.at({ 'f', '6' }) = pieces[Black];
-    temp.at({ 'd', '6' }) = pieces[Black];
-
-    temp.at({ 'g', '1' }) = pieces[White];
-
-    gameBoard = temp;
-}
 //Resets the given board to classic checkers beginning
 //3 rows of pieces (12 total pieces each)
 void resetBoard(std::map<std::pair<char, char>, char> & gameBoard) {
@@ -167,8 +127,8 @@ void checkPromote(std::map<std::pair<char, char>, char> & gameBoard) {
 std::pair<bool, std::pair<std::vector<std::pair<char, char>>, std::vector<std::pair<char, char>>>> checkMove(const int & player,
                                                                                                              const std::pair<char, char> & from,
                                                                                                              const std::pair<char, char> & to,
-                                                                                                             const std::map<std::pair<char, char>, char> & gameBoard) {
-
+                                                                                                             const std::map<std::pair<char, char>, char> & gameBoard)
+{
     bool errors = false;
     std::pair<std::vector<std::pair<char, char>>, std::vector<std::pair<char, char>>> returnResult;
 
@@ -199,9 +159,9 @@ std::pair<bool, std::pair<std::vector<std::pair<char, char>>, std::vector<std::p
     }
 
     //Is there a valid jumping path
-    if (!errors) { //Do not bother doing search if the move is already known to be invalid
+    if (!errors) {
         if (singleSquareMove(from, to, gameBoard)) {
-            errors = false; //Explicit, but unneccessary
+            errors = false;
             returnResult.first.push_back(to);
         }
         else {
@@ -211,7 +171,7 @@ std::pair<bool, std::pair<std::vector<std::pair<char, char>>, std::vector<std::p
                 errors = true;
             }
             else {
-                errors = false; //Explicit, but unneccessary
+                errors = false;
                 returnResult = result.second;
             }
         }
@@ -229,8 +189,7 @@ std::pair<bool, std::pair<std::vector<std::pair<char, char>>, std::vector<std::p
     std::vector<std::pair<char, char>> jumpedActual{}; //enemy tokens that were jumped over in the process
     bool pathFound = false;
     int playerPiece = gameBoard.at(from);
-    //The node could also be implemented has its own class,
-    //  but I wanted it to be within the function jumpPathSearch() to make it explicit that it is not used elsewhere.
+
     struct Node {
     public:
         std::pair<char, char> square; //Which square this is
@@ -319,9 +278,7 @@ std::pair<bool, std::pair<std::vector<std::pair<char, char>>, std::vector<std::p
     //returns:
     //  boolean-> was a path found?
     //  pair   -> vector of points -> squares that the piece jumped to on the way to the finish
-    //         -> vector of points -> enemy pieces squares that were jumped over along the path
-    //
-    // Note: the first vector of points is returned for the future implementation of animating the jumping sequence.
+    //  pair   -> vector of points -> enemy pieces squares that were jumped over along the path
     return { pathFound,{ path, jumpedActual } };
 }
 
@@ -390,7 +347,7 @@ std::pair< std::vector<std::pair<char, char>>, std::vector<std::pair<char, char>
 
     return { output, jumped };
 }
-//Checks to see if the the move is a single square away and if it is valid.
+//Checks to see if the move is a single square away and if it is valid.
 //Alternatively, if findAllSquares is true, returns if there are any valid single square moves.
 bool singleSquareMove(const std::pair<char, char> & from,
                       const std::pair<char, char> & to,
@@ -488,16 +445,13 @@ int checkWinStatus(std::map<std::pair<char, char>, char> & gameBoard, int & play
         }else{
             return BlackWin;
         }
-        //std::cout << "[" << 'x' << "] pieces win!" << std::endl;
     }
     else if ((findPiecesRemaining(Black, gameBoard)).size() == 0) {
         return WhiteWin;
-        //std::cout << "[" << 'o' << "] pieces win!" << std::endl;
     }
     else if (checkStalemate(playerTurn, gameBoard)) {
         if(checkStalemate( ((playerTurn == Black) ? White : Black), gameBoard ))
             return Draw; //Both are at stalemate
-        //std::cout << "Stalemate: [" << pieces[playerTurn] << "] loses." << std::endl;
         return ((playerTurn == Black) ? WhiteWin : BlackWin);
     }
     else{
@@ -509,15 +463,9 @@ int takeTurn(std::map<std::pair<char, char>, char> & gameBoard,
              std::pair<std::pair<char, char>, std::pair<char, char>> playerMove,
              int & playerTurn)
 {
-
-    //checkPromote(gameBoard); //Only necessary for custom piece layouts
-    //printBoard(gameBoard);
-
     auto result = checkMove(playerTurn, playerMove.first, playerMove.second, gameBoard);
-    //Result also contains the path taken for the move, so there is the future option of animating the movement
 
     if (result.first) { //if the move was legal
-        //std::cout << "Move was legal." << std::endl;
         movePiece(playerMove.first, playerMove.second, gameBoard);
         for (auto el: result.second.second) { //delete any "jumped" tokens
             removeSquare(el, gameBoard);

@@ -1,7 +1,9 @@
 #ifndef GAMEPIECE_H
 #define GAMEPIECE_H
 
+#include "qapplication.h"
 #include "qgraphicssceneevent.h"
+#include "qmimedata.h"
 #include "qpainter.h"
 #include <Qt>
 #include <QGraphicsItem>
@@ -16,17 +18,17 @@ private:
     std::pair<char, char> square = std::make_pair('a', '1');
     int x = 0;
     int y = 0;
-    QColor colour = Qt::black;
+    QColor color = Qt::black;
     bool king = false;
 
 public:
     GamePiece(){
 
     }
-    GamePiece(int x, int y, QColor colour, std::pair<char, char> square, bool king = false){
+    GamePiece(int x, int y, QColor color, std::pair<char, char> square, bool king = false){
         this->x = x;
         this->y = y;
-        this->colour = colour;
+        this->color = color;
         this->king = king;
         this->square = square;
         //std::cout<<"Created game piece at "<<x<<y<<std::endl;
@@ -69,7 +71,7 @@ private:
 
         painter.drawEllipse(QPoint(x+75/3, y+75/3), 75/3, 75/3);
 
-        painter.setBrush(colour);
+        painter.setBrush(color);
         painter.drawEllipse(QPoint(x+75/3, y+75/3), 71/3, 71/3);
         painter.setBrush(Qt::black);
         painter.end();
@@ -115,7 +117,7 @@ private:
 
         painter->drawEllipse(boundingRect());
 
-        painter->setBrush(colour);
+        painter->setBrush(color);
         painter->drawEllipse(interior());
         if(king){
             const QPointF kingPoints[7] = { //the king's crown

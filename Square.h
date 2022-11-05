@@ -110,51 +110,6 @@ private:
             }
         }
     }
-
-
-    //User creating a board:
-
-    void mousePressEvent(QGraphicsSceneMouseEvent * event){
-        if (CF::userCreatingBoardFlag){
-            event->setAccepted(true);
-            if (event->button()==Qt::LeftButton){ //left click cycles through colours
-                switch(customEditingFlag){
-                case White:
-                    customEditingFlag = Black;
-                    break;
-                case Black:
-                    customEditingFlag = Empty;
-                    break;
-                case Empty:
-                    customEditingFlag = White;
-                    break;
-                case WhiteKing:
-                    customEditingFlag = BlackKing;
-                    break;
-                case BlackKing:
-                    customEditingFlag = Empty;
-                    break;
-                }
-            }else if(event->button()==Qt::RightButton){ //right click promotes and demotes
-                switch(customEditingFlag){
-                case White:
-                    customEditingFlag = WhiteKing;
-                    break;
-                case Black:
-                    customEditingFlag = BlackKing;
-                    break;
-                case WhiteKing:
-                    customEditingFlag = White;
-                    break;
-                case BlackKing:
-                    customEditingFlag = Black;
-                    break;
-                }
-            }
-            customBoardAddPiece(square, customEditingFlag); //adds piece to custom board
-            update();
-        }
-    }
 };
 
 

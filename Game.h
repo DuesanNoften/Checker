@@ -37,9 +37,6 @@ typedef enum Pieces_List{
 static const std::vector<char> pieces = { '.', 'x', 'X', 'o', 'O' };
 
 void emptyBoard(std::map<std::pair<char, char>, char> & gameBoard);
-void customBoardAllKings(std::map<std::pair<char, char>, char> & gameBoard);
-void customBoardBigJumper(std::map<std::pair<char, char>, char> & gameBoard);
-void customBoardEightPiecesEach(std::map<std::pair<char, char>, char> & gameBoard);
 void resetBoard(std::map<std::pair<char, char>, char> & gameBoard);
 
 void printBoard(const std::map<std::pair<char, char>, char> & gameBoard);
