@@ -2,6 +2,7 @@
 #include "BackTracking.h"
 #include "Game.h"
 #include <QtGlobal>
+#include <fstream>
 
 std::pair<int, std::pair<char, char>> findBestJumpMoveAI(const std::map<std::pair<char, char>, char> &gameBoard,
                                                          const std::pair<char, char> &from){
@@ -93,6 +94,14 @@ std::pair<int, std::pair<char, char>> findBestJumpMoveAI(const std::map<std::pai
             to = it->second.at(randomIndex);
         }
     }
+
+    ofstream text;
+
+    text.open("RegistroJump.txt",ios::out);
+
+    archivo<<possibilities;
+
+    archivo.close
 
     if(val == 0){
         return {0, to};
